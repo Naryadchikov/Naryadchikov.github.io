@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Dynamic System</title>
+    <meta charset="utf-8">
+    <script src="js/p2.js"></script>
+    <script src="js/dynamicSystem.js"></script>
+    <script src="js/dynamicChart.js"></script>
+    <script type="text/javascript"></script>
+</head>
+
+<body>
+    <div style="text-align:center;">
+
+        <canvas width="800" height="500" id="myCanvas"></canvas>
+
+        <div style="width: 260px; margin: 10px auto; text-align:left;">
+            <div>
+                <input type="range" id="slider_g" style="width: 150px;" oninput="app.setSlider_g(this.value); document.getElementById('text_g').value = this.value;">
+                g =
+                <input id="text_g" style="width: 5ex;" required pattern="[-+]?([0-9]*\.[0-9]+|[0-9]+)" oninput="
+            if (!this.checkValidity()) return;
+            app.setSlider_g(this.value);
+            document.getElementById('slider_g').value = this.value;">
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <input type="range" id="slider_B" style="width: 150px;" oninput="app.setSlider_B(this.value); document.getElementById('text_B').value = this.value;">
+                B =
+                <input id="text_B" style="width: 5ex;" required pattern="[-+]?([0-9]*\.[0-9]+|[0-9]+)" oninput="
+            if (!this.checkValidity()) return;
+            app.setSlider_B(this.value);
+            document.getElementById('slider_B').value = this.value;">
+            </div>
+
+            <div>
+                <input type="range" id="slider_min_V" style="width: 150px;" oninput="app.setSlider_min_V(this.value); document.getElementById('text_min_V').value = this.value;">
+                minV =
+                <input id="text_min_V" style="width: 5ex;" required pattern="[-+]?([0-9]*\.[0-9]+|[0-9]+)" oninput="
+            if (!this.checkValidity()) return;
+            app.setSlider_min_V(this.value);
+            document.getElementById('slider_min_V').value = this.value;">
+            </div>
+
+            <div>
+                <input type="range" id="slider_max_V" style="width: 150px;" oninput="app.setSlider_max_V(this.value); document.getElementById('text_max_V').value = this.value;">
+                maxV =
+                <input id="text_max_V" style="width: 5ex;" required pattern="[-+]?([0-9]*\.[0-9]+|[0-9]+)" oninput="
+            if (!this.checkValidity()) return;
+            app.setSlider_max_V(this.value);
+            document.getElementById('slider_max_V').value = this.value;">
+            </div>
+
+            <div style="text-align:center;margin-bottom: 25px;">
+                <input type="button" style="width: 100px;" name="" onclick="app.sw(-1);" value="Reset">
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var app = new drawDynamicSystem(
+            document.getElementById('myCanvas'),
+            document.getElementById('slider_g'),
+            document.getElementById('text_g'),
+            document.getElementById('slider_min_V'),
+            document.getElementById('text_min_V'),
+            document.getElementById('slider_max_V'),
+            document.getElementById('text_max_V'),
+        );
+    </script>
+
+    <div id="chartContainerX" style="height: 300px; width: 100%;"></div>
+    <div id="chartContainerY" style="height: 300px; width: 100%;"></div>
+    <script src="js/canvasjs.min.js"></script>
+
+</body>
+
+</html>
