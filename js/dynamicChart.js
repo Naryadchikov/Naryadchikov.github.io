@@ -20,8 +20,8 @@ function drawChart(containerName, chartName, getUpdatedValueFunction) {
 
     var xVal = 0;
     var yVal = 0;
-    var updateInterval = 1 / 60;
-    var dataLength = 1000; // number of dataPoints visible at any point
+    var updateInterval = 50;
+    var dataLength = 300; // number of dataPoints visible at any point
 
     var updateChart = function (count) {
 

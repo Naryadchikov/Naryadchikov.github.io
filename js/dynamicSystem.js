@@ -1,17 +1,19 @@
 var circleBody2 = new Array(); // массив шариков
 var num = 50; // общее кол-во частиц
 
-function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, slider_max_V, text_max_V) {
+function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, slider_max_V, text_max_V, slider_particles_num, text_particles_num) {
 	var canvas, ctx, w, h, world, lineBody, lineBody1, s, s1; // переменные: канвас, содержимое канваса, ширина и высота канваса, создание "мира" p2, парвая и левая "стена", пружины для связи со стенами 
 	var circleShape2 = new Array(); // массив форм шариков
 	var ss = new Array(); // массив пружин
 	var k = 250; // жесткость пружин
 	var B = 0; // вязкость
+	var mass = 0.5 // масса шариков
 	var R = 0.05; // радиус шаров
 	var dx = 0.01; // начальная длина пружин
 	var g = 0; // сила тяжести
 	var minV = -5; // минимальная начальная скорость
 	var maxV = 5; // максимальная начальная скорость
+	var particles_num = num;
 
 	var sw = 0; // переключатель для кнопок
 
@@ -34,6 +36,10 @@ function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, s
 
 	this.setSlider_max_V = function (new_max_V) {
 		maxV = parseFloat(new_max_V);
+	};
+
+	this.setSlider_particles_num = function (new_particles_num) {
+		particles_num = parseInt(new_particles_num, 10);
 	};
 
 	this.setSlider_B = function (new_B) {
@@ -68,6 +74,12 @@ function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, s
 	slider_max_V.value = maxV;
 	text_max_V.value = maxV.toFixed(1);
 
+	slider_particles_num.min = 2;
+	slider_particles_num.max = 100;
+	slider_particles_num.step = 1;
+	slider_particles_num.value = particles_num;
+	text_particles_num.value = particles_num.toFixed(1);
+
 	slider_B.min = 0;
 	slider_B.max = 1;
 	slider_B.step = 0.10;
@@ -84,6 +96,7 @@ function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, s
 
 	// Функция сброса 
 	function Reset() {
+		num = particles_num;
 		sw = 0;
 		world.clear();
 		init();
@@ -122,7 +135,7 @@ function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, s
 		// Создаем все шарики
 		for (var i = 0; i < num; i++) {
 			circleShape2[i] = new p2.Circle({ radius: R });
-			circleBody2[i] = new p2.Body({ mass: 0.5, position: [(-6 + (12 * (i + 1) / (num + 1))), 0], angularDamping: 0, damping: B / 24, velocity: [0, getRandom(minV, maxV)] });
+			circleBody2[i] = new p2.Body({ mass: mass, position: [(-6 + (12 * (i + 1) / (num + 1))), 0], angularDamping: 0, damping: B / 24, velocity: [0, getRandom(minV, maxV)] });
 			circleBody2[i].addShape(circleShape2[i]);
 			world.addBody(circleBody2[i]);
 		};
@@ -288,7 +301,7 @@ function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, s
 			Reset();
 		}
 
-		world.step(1 / 60);
+		world.step((2 * Math.PI / Math.sqrt(k / mass)) / 100);
 
 		render();
 	}

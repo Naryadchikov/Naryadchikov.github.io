@@ -52,6 +52,15 @@
             document.getElementById('slider_max_V').value = this.value;">
             </div>
 
+            <div>
+                <input type="range" id="slider_particles_num" style="width: 150px;" oninput="app.setSlider_particles_num(this.value); document.getElementById('text_particles_num').value = this.value;">
+                num =
+                <input id="text_particles_num" style="width: 5ex;" required pattern="[-+]?([0-9]*\.[0-9]+|[0-9]+)" oninput="
+            if (!this.checkValidity()) return;
+            app.setSlider_particles_num(this.value);
+            document.getElementById('slider_particles_num').value = this.value;">
+            </div>
+
             <div style="text-align:center;margin-bottom: 25px;">
                 <input type="button" style="width: 100px;" name="" onclick="app.sw(-1);" value="Reset">
             </div>
@@ -67,6 +76,8 @@
             document.getElementById('text_min_V'),
             document.getElementById('slider_max_V'),
             document.getElementById('text_max_V'),
+            document.getElementById('slider_particles_num'),
+            document.getElementById('text_particles_num')
         );
     </script>
 
