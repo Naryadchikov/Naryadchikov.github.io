@@ -1,7 +1,7 @@
 var circleBody2 = new Array(); // массив шариков
 var num = 50; // общее кол-во частиц
 
-function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, slider_max_V, text_max_V, slider_particles_num, text_particles_num) {
+function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, slider_max_V, text_max_V, slider_particles_num, text_particles_num, slider_rest_length, text_rest_length) {
 	var canvas, ctx, w, h, world, lineBody, lineBody1, s, s1; // переменные: канвас, содержимое канваса, ширина и высота канваса, создание "мира" p2, парвая и левая "стена", пружины для связи со стенами 
 	var circleShape2 = new Array(); // массив форм шариков
 	var ss = new Array(); // массив пружин
@@ -14,6 +14,7 @@ function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, s
 	var minV = -5; // минимальная начальная скорость
 	var maxV = 5; // максимальная начальная скорость
 	var particles_num = num;
+	var rest_length = dx;
 
 	var sw = 0; // переключатель для кнопок
 
@@ -40,6 +41,10 @@ function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, s
 
 	this.setSlider_particles_num = function (new_particles_num) {
 		particles_num = parseInt(new_particles_num, 10);
+	};
+
+	this.setSlider_rest_length = function (new_rest_length) {
+		rest_length = parseFloat(new_rest_length);
 	};
 
 	this.setSlider_B = function (new_B) {
@@ -78,7 +83,13 @@ function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, s
 	slider_particles_num.max = 100;
 	slider_particles_num.step = 1;
 	slider_particles_num.value = particles_num;
-	text_particles_num.value = particles_num.toFixed(1);
+	text_particles_num.value = particles_num;
+	
+	slider_rest_length.min = 0.01;
+	slider_rest_length.max = 0.2;
+	slider_rest_length.step = 0.01;
+	slider_rest_length.value = rest_length;
+	text_rest_length.value = rest_length.toFixed(2);
 
 	slider_B.min = 0;
 	slider_B.max = 1;
@@ -97,6 +108,7 @@ function drawDynamicSystem(canvas, slider_g, text_g, slider_min_V, text_min_V, s
 	// Функция сброса 
 	function Reset() {
 		num = particles_num;
+		dx = rest_length;
 		sw = 0;
 		world.clear();
 		init();
